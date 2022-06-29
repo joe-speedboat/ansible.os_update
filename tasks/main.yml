@@ -5,13 +5,9 @@
   debug:
     msg:
       - ospatch_level: "{{ ospatch_level }}"
-      - ospatch_level_override: "{{ ospatch_level_override }}"
       - ospatch_reboot: "{{ ospatch_reboot }}"
-      - ospatch_reboot_override: "{{ ospatch_reboot_override }}"
       - ospatch_remove_old_kernel: "{{ ospatch_remove_old_kernel }}"
-      - ospatch_remove_old_kernel_override: "{{ ospatch_remove_old_kernel_override }}"
       - ospatch_keep_kernel_nr: "{{ ospatch_keep_kernel_nr }}"
-      - ospatch_keep_kernel_nr_override: "{{ ospatch_keep_kernel_nr_override }}"
   when: ospatch_debug_vars
 
 - name: check if host is online

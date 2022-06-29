@@ -1,15 +1,15 @@
 ---
 # ospatch_level: [none|security|full]
-ospatch_level: "{{ ospatch_level_override|default('security') }}"
+ospatch_level: security
 
 # reboot os if updates need to
 # ospatch_reboot: [true|false]
-ospatch_reboot: "{{ ospatch_reboot_override|default(True) }}"
+ospatch_reboot: True
 
 # remove old kernel to free space
 # ospatch_remove_old_kernel: [true|false]
-ospatch_remove_old_kernel: "{{ ospatch_remove_old_kernel_override|default(True) }}"
-ospatch_keep_kernel_nr: "{{ ospatch_keep_kernel_rn_override|default(2) }}"
+ospatch_remove_old_kernel: True
+ospatch_keep_kernel_nr: 2
 
 # show the final vars before work
 # ospatch_debug_vars: [true|false]
