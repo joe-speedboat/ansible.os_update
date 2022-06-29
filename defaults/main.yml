@@ -11,4 +11,7 @@ ospatch_reboot: "{{ ospatch_reboot_override|default(True) }}"
 ospatch_remove_old_kernel: "{{ ospatch_remove_old_kernel_override|default(True) }}"
 ospatch_keep_kernel_nr: "{{ ospatch_keep_kernel_rn_override|default(2) }}"
 
+# show the final vars before work
+# ospatch_debug_vars: [true|false]
+ospatch_debug_vars: False
 ...
