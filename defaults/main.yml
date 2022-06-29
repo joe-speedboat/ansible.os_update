@@ -1,0 +1,14 @@
+---
+# ospatch_level: [none|security|full]
+ospatch_level: "{{ ospatch_level_override|default('security') }}"
+
+# reboot os if updates need to
+# ospatch_reboot: [true|false]
+ospatch_reboot: "{{ ospatch_reboot_override|default(True) }}"
+
+# remove old kernel to free space
+# ospatch_remove_old_kernel: [true|false]
+ospatch_remove_old_kernel: "{{ ospatch_remove_old_kernel_override|default(True) }}"
+ospatch_keep_kernel_nr: "{{ ospatch_keep_kernel_rn_override|default(2) }}"
+
+...

@@ -1,0 +1,17 @@
+---
+- name: install needed packages
+  yum: 
+    name:
+      - yum-plugin-security
+      - yum-utils
+    state: present
+- name: install security patches with yum
+  yum:
+    name: '*'
+    state: latest
+    security: yes
+- name: install all kernel updates with yum
+  yum:
+    name: 'kernel*'
+    state: latest
+...

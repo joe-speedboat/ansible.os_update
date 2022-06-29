@@ -1,0 +1,7 @@
+---
+- name: perform full os upgrade
+  dnf:
+    name: "*"
+    state: latest
+
+...

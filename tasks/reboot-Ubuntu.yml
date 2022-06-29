@@ -1,0 +1,29 @@
+---
+- name: Check for reboot hint
+  shell: if [ $(readlink -f /boot/vmlinuz) != /boot/vmlinuz-$(uname -r) ]; then echo 'reboot'; else echo 'no'; fi
+  ignore_errors: true
+  changed_when: false
+  register: reboot_hint
+
+- name: reboot host if needed
+  block:
+  - name: reboot host 
+    shell: sleep 5 ; shutdown -r now "Ansible reboot"
+    async: 10 # do not care for 10 sec (we left in 5 sec)
+    poll: 0  # fire and forget
+
+  - name: wait for host to finish reboot
+    wait_for_connection:
+      delay: 20  # do not check for at least xx sec
+
+  - name: check if host has booted within last 300 sec
+    shell: test $(cat /proc/uptime | cut -d. -f1) -lt 300
+    changed_when: false
+    register: reboot_check
+
+  - name: alert if host has not been rebootet
+    fail:
+      msg: "{{ ansible_host }} has not booted, manual check needed"
+    when: reboot_check.rc != 0
+  when: reboot_hint.stdout.find("reboot") != -1
+...

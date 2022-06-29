@@ -1,0 +1,21 @@
+---
+- name: Make a copy of security repos
+  shell: cat /etc/apt/sources.list /etc/apt/sources.list.d/*.list | grep -- -security >/etc/apt/security.sources.list
+  changed_when: false
+
+- name: Update cache
+  apt: 
+    update_cache: yes
+  changed_when: false
+
+- name: Install security updates
+  shell: apt-get upgrade -oDir::Etc::SourceList=/etc/apt/security.sources.list --force-yes -y
+  register: update_cmd
+  args:
+    warn: false
+  changed_when: false
+
+- name: check for installed packages
+  debug: msg='updates got installed'
+  when: update_cmd.stdout.find('0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded') == -1
+...

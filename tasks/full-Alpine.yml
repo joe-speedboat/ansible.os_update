@@ -1,0 +1,6 @@
+---
+- name: perform full os upgrade
+  apk:
+    update_cache: yes
+    upgrade: yes
+...

@@ -1,0 +1,6 @@
+---
+- name: perform full os upgrade because Alpine can not filter security patches
+  apk:
+    update_cache: yes
+    upgrade: yes
+...

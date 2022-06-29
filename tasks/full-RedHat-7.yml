@@ -1,0 +1,6 @@
+---
+- name: perform full os upgrade
+  yum:
+    name: '*'
+    state: latest
+...

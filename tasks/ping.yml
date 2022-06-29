@@ -1,0 +1,20 @@
+---
+- name: check if host is online right now
+  ping:
+  register: ping
+  failed_when: false
+
+- name: wait for host to become online
+  wait_for:
+    port: "{{ (ansible_port|default(ansible_ssh_port))|default(22) }}"
+    host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+    search_regex: OpenSSH
+    delay: 10  # do not check for at least 10 sec
+  connection: local
+  when: ping.failed == true
+
+- name: finally, we decide to proceed or fail
+  setup:
+  when: ping.failed == false
+
+...

@@ -1,0 +1,50 @@
+---
+# tasks file for joe-speedboat.os_update
+
+- name: check if host is online
+  include_tasks: ping.yml
+
+# ospatch_level: security,full
+# ansible_distribution: AlmaLinux, CentOS, Ubuntu, Fedora
+# ansible_distribution_major_version: 8, 7, 18, 32
+# ansible_os_family: RedHat, RedHat, Debian, RedHat
+
+
+- name: Upgrade OS Packages
+  include_tasks: '{{ patch_host }}'
+  with_first_found:
+    - files:
+        - '{{ ospatch_level }}-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - '{{ ospatch_level }}-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml'
+        - '{{ ospatch_level }}-{{ ansible_distribution }}.yml'
+        - '{{ ospatch_level }}-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: patch_host
+
+- name: Reboot if needed/wanted
+  include_tasks: '{{ boot_host }}'
+  with_first_found:
+    - files:
+        - 'reboot-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'reboot-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml'
+        - 'reboot-{{ ansible_distribution }}.yml'
+        - 'reboot-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: boot_host
+  when: ospatch_reboot
+
+- name: Cleanup old kernels
+  include_tasks: '{{ kernel_cleanup_host }}'
+  with_first_found:
+    - files:
+
+        - 'kernel-cleanup-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'kernel-cleanup-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml'
+        - 'kernel-cleanup-{{ ansible_distribution }}.yml'
+        - 'kernel-cleanup-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: kernel_cleanup_host
+  when: ospatch_remove_old_kernel and ospatch_reboot
