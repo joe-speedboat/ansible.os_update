@@ -14,4 +14,19 @@ ospatch_keep_kernel_nr: 2
 # show the final vars before work
 # ospatch_debug_vars: [true|false]
 ospatch_debug_vars: False
+
+# which categories to apply, eg: ['CriticalUpdates', 'SecurityUpdates', 'UpdateRollups']
+# win_updates > category_names
+windows_updates_category_names_full: '*'
+
+# which categories to apply, eg: ['CriticalUpdates', 'SecurityUpdates', 'UpdateRollups']
+# win_updates > category_names
+windows_updates_category_names_security:
+- CriticalUpdates
+- SecurityUpdates
+
+# Windows patches to avoid
+# win_updates > reject_list
+windows_updates_reject_list: ''
+
 ...

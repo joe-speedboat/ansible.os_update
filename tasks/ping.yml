@@ -1,20 +1,34 @@
 ---
-- name: check if host is online right now
-  ping:
-  register: ping
-  failed_when: false
+- name: test if linux host is alive
+  block:
+  - name: 1st ping linux
+    ping:
+    register: ping
+    failed_when: false
 
-- name: wait for host to become online
-  wait_for:
-    port: "{{ (ansible_port|default(ansible_ssh_port))|default(22) }}"
-    host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
-    search_regex: OpenSSH
-    delay: 10  # do not check for at least 10 sec
-  connection: local
-  when: ping.failed == true
+  - name: 2st ping linux
+    ping:
+    register: ping2
+    failed_when: false
+    when: ping.failed
+  when: (ansible_connection is defined) and ((ansible_connection == 'ssh') or (ansible_connection == ''))
 
-- name: finally, we decide to proceed or fail
+- name: test if windows host is alive
+  block:
+  - name: 1st ping windows
+    win_ping:
+    register: ping
+    failed_when: false
+
+  - name: 2st ping windows
+    win_ping:
+    register: ping2
+    failed_when: false
+    when: ping.failed
+  when: (ansible_connection is defined) and (ansible_connection == 'winrm')
+
+- name: finally, we decide to proceed
   setup:
-  when: ping.failed == false
+  when: ping.failed == false or ping2.failed == false
 
 ...
