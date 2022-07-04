@@ -6,7 +6,7 @@
     register: ping
     failed_when: false
 
-  - name: 2st ping linux
+  - name: 2nd ping linux
     ping:
     register: ping2
     failed_when: false
@@ -20,7 +20,7 @@
     register: ping
     failed_when: false
 
-  - name: 2st ping windows
+  - name: 2nd ping windows
     win_ping:
     register: ping2
     failed_when: false

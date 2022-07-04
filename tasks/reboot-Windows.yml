@@ -1,0 +1,7 @@
+---
+- name: show if windows has rebooted with updates
+  debug:
+    msg: 
+    - "win_updates.reboot_required: {{ win_updates.reboot_required }}"
+    - "ospatch_reboot: {{ ospatch_reboot }}"
+  changed_when: win_updates.reboot_required and ospatch_reboot 
