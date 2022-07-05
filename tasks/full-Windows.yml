@@ -1,9 +1,9 @@
 ---
 - name: apply full windows updates
   win_updates:
-    category_names: "{{ windows_updates_category_names_full }}"
+    category_names: "{{ ospatch_windows_updates_category_names_full }}"
     reboot: "{{ ospatch_reboot }}"
-    reject_list: "{{ windows_updates_reject_list }}"
+    reject_list: "{{ ospatch_windows_updates_reject_list }}"
   register: win_updates
 
 - name: display update results
