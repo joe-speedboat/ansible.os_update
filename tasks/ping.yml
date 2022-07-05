@@ -29,6 +29,6 @@
 
 - name: finally, we decide to proceed
   setup:
-  when: ping.failed == false or ping2.failed == false
+  when: ( ping.failed is undefined or ping.failed == false ) or ( ping.failed is undefined or ping2.failed == false )
 
 ...
