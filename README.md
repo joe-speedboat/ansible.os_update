@@ -24,13 +24,18 @@ Supported Operating Systems:
 
 * Alpine: stable-latest
 
-* Debain should work, I don't use it for my enterprise aware setups.
+* Debain should work, I only use LTS distributions, which can have SLA.
 
-* Mint works, but has no focus
+* Mint works, but has no focus (personal needs)
 
 
 Role Variables
 --------------
+* gather_facts is turned off, due we need to decide if host is online first.    
+  we do this multiple times, to avoid load and connectivity issues.   
+  please look into `tests` folder.   
+
+
 Most variables have ```varname_default``` equivalent, which is meant to be used for overriding the default at playbook level.   
 So you can define the default behavior for all targets that have no variables defined at all. eg: full|security patching.   
 
