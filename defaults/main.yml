@@ -1,15 +1,15 @@
 ---
 # ospatch_level: [none|security|full]
-ospatch_level: security
+ospatch_level: "{{ ospatch_level_default|default('security') }}"
 
 # reboot os if updates need to
 # ospatch_reboot: [true|false]
-ospatch_reboot: True
+ospatch_reboot: "{{ ospatch_reboot_default|default(True) }}"
 
 # remove old kernel to free space
 # ospatch_remove_old_kernel: [true|false]
-ospatch_remove_old_kernel: True
-ospatch_keep_kernel_nr: 2
+ospatch_remove_old_kernel: "{{ ospatch_remove_old_kernel_default|default(True) }}"
+ospatch_keep_kernel_nr: "{{ ospatch_keep_kernel_nr_default|default(2) }}"
 
 # show the final vars before work
 # ospatch_debug_vars: [true|false]
@@ -17,16 +17,14 @@ ospatch_debug_vars: False
 
 # which categories to apply, eg: ['CriticalUpdates', 'SecurityUpdates', 'UpdateRollups']
 # win_updates > category_names
-ospatch_windows_updates_category_names_full: '*'
+ospatch_windows_updates_category_names_full: "{{ ospatch_windows_updates_category_names_full_default|default('*') }}"
 
 # which categories to apply, eg: ['CriticalUpdates', 'SecurityUpdates', 'UpdateRollups']
 # win_updates > category_names
-ospatch_windows_updates_category_names_security:
-- CriticalUpdates
-- SecurityUpdates
+ospatch_windows_updates_category_names_security: "{{ ospatch_windows_updates_category_names_default|default(['CriticalUpdates', 'SecurityUpdates']) }}"
 
 # Windows patches to avoid
 # win_updates > reject_list
-ospatch_windows_updates_reject_list: ''
+ospatch_windows_updates_reject_list: "{{ ospatch_windows_updates_reject_list_default|default('') }}"
 
 ...

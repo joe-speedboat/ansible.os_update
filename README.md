@@ -31,6 +31,16 @@ Supported Operating Systems:
 
 Role Variables
 --------------
+Most variables have ```varname_default``` equivalent, which is meant to be used for overriding the default at playbook level.   
+So you can define the default behavior for all targets that have no variables defined at all. eg: full|security patching.   
+
+Let's make an example:
+* default ```ospatch_reboot``` in ```defaults/main.yml``` is set to ```True```
+* in playbook, you define ```ospatch_reboot_default``` with ```False```
+* in inventory, you have set ```ospatch_reboot``` to ```True``` for your hostgroup ```testing```
+So all your host will avoid reboot after patching, except your hostgroup ```testing``` .... voilà, clever, isn't it?   
+
+Remind: `varname` is always enforcing, `varname_default` is just overriding the roles default behavior.
 
 * `ospatch_level:` security   
 ospatch_level: [none|security|full]
