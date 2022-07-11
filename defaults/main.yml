@@ -1,15 +1,20 @@
 ---
 # os_update_level: [none|security|full]
-os_update_level: "{{ os_update_level_default|default('security') }}"
+os_update_level_default: 'security'
+os_update_level: "{{ os_update_level_default }}"
 
 # reboot os if updates need to
 # os_update_reboot: [true|false]
-os_update_reboot: "{{ os_update_reboot_default|default(True) }}"
+os_update_reboot_default: True
+os_update_reboot: "{{ os_update_reboot_default }}"
 
 # remove old kernel to free space
 # os_update_remove_old_kernel: [true|false]
-os_update_remove_old_kernel: "{{ os_update_remove_old_kernel_default|default(True) }}"
-os_update_keep_kernel_nr: "{{ os_update_keep_kernel_nr_default|default(2) }}"
+os_update_remove_old_kernel_default: True
+os_update_remove_old_kernel: "{{ os_update_remove_old_kernel_default }}"
+
+os_update_keep_kernel_nr_default: 2
+os_update_keep_kernel_nr: "{{ os_update_keep_kernel_nr_default }}"
 
 # show the final vars before work
 # os_update_debug_vars: [true|false]
@@ -17,14 +22,19 @@ os_update_debug_vars: False
 
 # which categories to apply, eg: ['CriticalUpdates', 'SecurityUpdates', 'UpdateRollups']
 # win_updates > category_names
-os_update_windows_updates_category_names_full: "{{ os_update_windows_updates_category_names_full_default|default('*') }}"
+os_update_windows_updates_category_names_full_default: '*'
+os_update_windows_updates_category_names_full: "{{ os_update_windows_updates_category_names_full_default }}"
 
 # which categories to apply, eg: ['CriticalUpdates', 'SecurityUpdates', 'UpdateRollups']
 # win_updates > category_names
-os_update_windows_updates_category_names_security: "{{ os_update_windows_updates_category_names_default|default(['CriticalUpdates', 'SecurityUpdates']) }}"
+os_update_windows_updates_category_names_default:
+- 'CriticalUpdates'
+- 'SecurityUpdates'
+os_update_windows_updates_category_names_security: "{{ os_update_windows_updates_category_names_default }}"
 
 # Windows patches to avoid
 # win_updates > reject_list
-os_update_windows_updates_reject_list: "{{ os_update_windows_updates_reject_list_default|default('') }}"
+os_update_windows_updates_reject_list_default: ''
+os_update_windows_updates_reject_list: "{{ os_update_windows_updates_reject_list_default }}"
 
 ...
