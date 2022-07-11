@@ -4,20 +4,20 @@
 - name: show variables
   debug:
     msg:
-      - ospatch_level: "{{ ospatch_level }}"
-      - ospatch_level_default: "{{ ospatch_level_default }}"
-      - ospatch_reboot: "{{ ospatch_reboot }}"
-      - ospatch_reboot_default: "{{ ospatch_reboot_default }}"
-      - ospatch_remove_old_kernel: "{{ ospatch_remove_old_kernel }}"
-      - ospatch_remove_old_kernel_default: "{{ ospatch_remove_old_kernel_default }}"
-      - ospatch_keep_kernel_nr: "{{ ospatch_keep_kernel_nr }}"
-      - ospatch_keep_kernel_nr_default: "{{ ospatch_keep_kernel_nr_default }}"
-  when: ospatch_debug_vars
+      - os_update_level: "{{ os_update_level }}"
+      - os_update_level_default: "{{ os_update_level_default }}"
+      - os_update_reboot: "{{ os_update_reboot }}"
+      - os_update_reboot_default: "{{ os_update_reboot_default }}"
+      - os_update_remove_old_kernel: "{{ os_update_remove_old_kernel }}"
+      - os_update_remove_old_kernel_default: "{{ os_update_remove_old_kernel_default }}"
+      - os_update_keep_kernel_nr: "{{ os_update_keep_kernel_nr }}"
+      - os_update_keep_kernel_nr_default: "{{ os_update_keep_kernel_nr_default }}"
+  when: os_update_debug_vars
 
 - name: check if host is online
   include_tasks: ping.yml
 
-# ospatch_level: security,full
+# os_update_level: security,full
 # ansible_distribution: AlmaLinux, CentOS, Ubuntu, Fedora
 # ansible_distribution_major_version: 8, 7, 18, 32
 # ansible_os_family: RedHat, RedHat, Debian, RedHat
@@ -27,10 +27,10 @@
   include_tasks: '{{ patch_host }}'
   with_first_found:
     - files:
-        - '{{ ospatch_level }}-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
-        - '{{ ospatch_level }}-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml'
-        - '{{ ospatch_level }}-{{ ansible_distribution }}.yml'
-        - '{{ ospatch_level }}-{{ ansible_os_family }}.yml'
+        - '{{ os_update_level }}-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - '{{ os_update_level }}-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml'
+        - '{{ os_update_level }}-{{ ansible_distribution }}.yml'
+        - '{{ os_update_level }}-{{ ansible_os_family }}.yml'
       errors: 'ignore'
   loop_control:
     loop_var: patch_host
@@ -46,7 +46,7 @@
       errors: 'ignore'
   loop_control:
     loop_var: boot_host
-  when: ospatch_reboot
+  when: os_update_reboot
 
 - name: Cleanup old kernels
   include_tasks: '{{ kernel_cleanup_host }}'
@@ -60,4 +60,4 @@
       errors: 'ignore'
   loop_control:
     loop_var: kernel_cleanup_host
-  when: ospatch_remove_old_kernel and ospatch_reboot
+  when: os_update_remove_old_kernel and os_update_reboot

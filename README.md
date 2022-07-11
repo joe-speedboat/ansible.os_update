@@ -40,23 +40,23 @@ Most variables have ```varname_default``` equivalent, which is meant to be used 
 So you can define the default behavior for all targets that have no variables defined at all. eg: full|security patching.   
 
 Let's make an example:
-* default ```ospatch_reboot``` in ```defaults/main.yml``` is set to ```True```
-* in playbook, you define ```ospatch_reboot_default``` with ```False```
-* in inventory, you have set ```ospatch_reboot``` to ```True``` for your hostgroup ```testing```
+* default ```os_update_reboot``` in ```defaults/main.yml``` is set to ```True```
+* in playbook, you define ```os_update_reboot_default``` with ```False```
+* in inventory, you have set ```os_update_reboot``` to ```True``` for your hostgroup ```testing```
 So all your host will avoid reboot after patching, except your hostgroup ```testing``` .... voilà, clever, isn't it?   
 
 Remind: `varname` is always enforcing, `varname_default` is just overriding the roles default behavior.
 
-* `ospatch_level:` security   
-ospatch_level: [none|security|full]
+* `os_update_level:` security   
+os_update_level: [none|security|full]
 
-* `ospatch_reboot:` true   
-ospatch_reboot: [true|false]
+* `os_update_reboot:` true   
+os_update_reboot: [true|false]
 
-* `ospatch_remove_old_kernel:` true   
-ospatch_remove_old_kernel: [true|false]
+* `os_update_remove_old_kernel:` true   
+os_update_remove_old_kernel: [true|false]
 
-* `ospatch_keep_kernel_nr:` 2
+* `os_update_keep_kernel_nr:` 2
 
 
 Dependencies
