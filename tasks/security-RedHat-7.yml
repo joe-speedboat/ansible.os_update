@@ -2,14 +2,10 @@
 - name: install needed packages
   yum: 
     name: yum-utils
-    state: present
 - name: install security patches with yum
   yum:
     name: '*'
     state: latest
+    update_cache: True
     security: yes
-- name: install all kernel updates with yum
-  yum:
-    name: 'kernel*'
-    state: latest
 ...

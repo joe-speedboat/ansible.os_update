@@ -1,5 +1,5 @@
 ---
-# tasks file for joe-speedboat.os_update
+# tasks file for os_update
 
 - name: show variables
   debug:
@@ -31,9 +31,11 @@
         - '{{ os_update_level }}-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml'
         - '{{ os_update_level }}-{{ ansible_distribution }}.yml'
         - '{{ os_update_level }}-{{ ansible_os_family }}.yml'
+        - '{{ os_update_level }}.yml'
       errors: 'ignore'
   loop_control:
     loop_var: patch_host
+  when: os_update_level != 'none'
 
 - name: Reboot if needed/wanted
   include_tasks: '{{ boot_host }}'

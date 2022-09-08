@@ -1,15 +1,11 @@
 ---
-- name: Make a copy of security repos
-  shell: cat /etc/apt/sources.list /etc/apt/sources.list.d/*.list | grep -- -security >/etc/apt/security.sources.list
-  changed_when: false
-
 - name: Update cache
   apt: 
     update_cache: yes
   changed_when: false
 
 - name: Install security updates
-  shell: apt-get upgrade -oDir::Etc::SourceList=/etc/apt/security.sources.list --force-yes -y
+  shell: apt-get -s dist-upgrade | grep '^Inst' | grep -i -- '-security ' | awk '{print $2}' | xargs apt-get install
   register: update_cmd
   args:
     warn: false

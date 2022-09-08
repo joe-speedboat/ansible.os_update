@@ -1,6 +1,6 @@
 ---
 - name: check if reboot is needed
-  shell: needs-restarting | grep -v 'Updating Subscription Management' | wc -l
+  shell: needs-restarting -r | grep 'Reboot is required' | wc -l
   register: needs_restarting
   changed_when: needs_restarting.stdout|int != 0
 

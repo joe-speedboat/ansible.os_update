@@ -2,5 +2,6 @@
 - name: perform full os upgrade
   yum:
     name: '*'
+    update_cache: True
     state: latest
 ...

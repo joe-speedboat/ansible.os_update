@@ -1,0 +1,2 @@
+- debug:
+    msg: os_update_level=none means no updates wanted at all

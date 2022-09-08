@@ -1,6 +1,7 @@
 ---
 - name: perform full os upgrade
-  yum:
+  dnf:
     name: '*'
+    update_cache: True
     state: latest
 ...
