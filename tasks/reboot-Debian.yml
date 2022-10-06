@@ -26,4 +26,5 @@
       msg: "{{ ansible_host }} has not booted, manual check needed"
     when: reboot_check.rc != 0
   when: reboot_hint.stdout.find("reboot") != -1
+  throttle: "{{ os_update_conc_reboot }}"
 ...

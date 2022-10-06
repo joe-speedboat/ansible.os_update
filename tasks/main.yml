@@ -35,6 +35,7 @@
       errors: 'ignore'
   loop_control:
     loop_var: patch_host
+  when: os_update_level != 'none'
 
 - name: Reboot if needed/wanted
   include_tasks: '{{ boot_host }}'
