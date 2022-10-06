@@ -4,7 +4,7 @@ os_update_level_default: 'security'
 os_update_level: "{{ os_update_level_default }}"
 
 # defaults to serial var, for clusters you may need 1
-# This defines, how many systems can reboot at same time, limit is always the serial magiv var
+# This defines, how many systems can reboot at same time, limit is always the serial magic var
 # WARNING: Windows Systems do not care about this value (tbd)
 # os_update_conc_reboot: ["integer"]
 os_update_conc_reboot_default: "{{ ansible_play_batch|length|int }}"
