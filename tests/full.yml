@@ -2,7 +2,7 @@
 - hosts: all
   gather_facts: no
   roles:
-    - os_update
+    - joe-speedboat.os_update
   vars:
   - os_update_level_default: full
   - os_update_reboot_default: true

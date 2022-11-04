@@ -5,12 +5,18 @@
     ping:
     register: ping
     failed_when: false
+    ignore_unreachable: yes
+    ignore_errors: yes
 
   - name: 2nd ping linux
     ping:
     register: ping2
     failed_when: false
-    when: ping.failed
+    ignore_unreachable: yes
+    ignore_errors: yes
+    when: >
+      (ping.failed is defined and ping.failed == true ) or 
+      (ping.unreachable is defined and ping.unreachable == true )
   when: (ansible_connection is defined) and ((ansible_connection == 'ssh') or (ansible_connection == ''))
 
 - name: test if windows host is alive
@@ -19,16 +25,24 @@
     win_ping:
     register: ping
     failed_when: false
+    ignore_unreachable: yes
+    ignore_errors: yes
 
   - name: 2nd ping windows
     win_ping:
     register: ping2
     failed_when: false
-    when: ping.failed
+    ignore_unreachable: yes
+    ignore_errors: yes
+    when: >
+      (ping.failed is defined and ping.failed == true ) or 
+      (ping.unreachable is defined and ping.unreachable == true )
   when: (ansible_connection is defined) and (ansible_connection == 'winrm')
 
 - name: finally, we decide to proceed
   setup:
-  when: ( ping.failed is undefined or ping.failed == false ) or ( ping.failed is undefined or ping2.failed == false )
+  when: >
+    ( ping.failed is undefined or ping.failed == false ) or 
+    ( ping2.failed is undefined or ping2.failed == false )
 
 ...
