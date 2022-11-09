@@ -4,6 +4,10 @@
   register: needs_restarting
   changed_when: needs_restarting.stdout|int != 0
 
+- name: show cmd output
+  debug: var=needs_restarting
+  when: os_update_debug_vars
+
 - name: reboot host if needed
   block:
   - name: reboot host 

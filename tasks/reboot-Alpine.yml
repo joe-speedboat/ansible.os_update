@@ -16,6 +16,10 @@
   changed_when: false
   register: reboot_hint
 
+- name: show cmd output
+  debug: var=reboot_hint
+  when: os_update_debug_vars
+
 - name: reboot host if needed
   block:
   - name: reboot host 
