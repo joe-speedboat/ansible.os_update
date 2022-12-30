@@ -33,10 +33,10 @@
 - name: show variables
   debug:
     msg:
-      - ansible_distribution_major_version: "{{ ansible_distribution_major_version }}"
-      - ansible_distribution: "{{ ansible_distribution }}"
-      - ansible_os_family: "{{ ansible_os_family }}"
-      - ansible_python_interpreter: "{{ ansible_python_interpreter }}"
+      - ansible_distribution_major_version: "{{ ansible_distribution_major_version|d('undefined') }}"
+      - ansible_distribution: "{{ ansible_distribution|d('undefined') }}"
+      - ansible_os_family: "{{ ansible_os_family|d('undefined') }}"
+      - ansible_python_interpreter: "{{ ansible_python_interpreter|d('undefined') }}"
       - os_update_level: "{{ os_update_level }}"
       - os_update_level_default: "{{ os_update_level_default }}"
       - os_update_reboot: "{{ os_update_reboot }}"
