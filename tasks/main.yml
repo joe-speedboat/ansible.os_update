@@ -14,6 +14,7 @@
   when: >
     ansible_distribution == "AlmaLinux" or
     ansible_distribution == "Rocky" or
+    ansible_distribution == "CentOS" or
     ansible_distribution == "RedHat"    
 
 - name: fix ansible_python_interpreter, for Rocky and AlmaLinux, see lib/ansible/config/base.yml
