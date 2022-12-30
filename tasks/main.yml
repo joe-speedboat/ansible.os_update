@@ -5,6 +5,9 @@
   set_fact:
     ansible_distribution_combine: dummy
 
+- name: check if host is online
+  include_tasks: ping.yml
+
 - name: Create rhelAll fact if needed when AlmaLinux, Rocky, RHEL
   set_fact:
     ansible_distribution_combine: rhelAll
@@ -30,6 +33,9 @@
 - name: show variables
   debug:
     msg:
+      - ansible_distribution_major_version: "{{ ansible_distribution_major_version }}"
+      - ansible_distribution: "{{ ansible_distribution }}"
+      - ansible_os_family: "{{ ansible_os_family }}"
       - ansible_python_interpreter: "{{ ansible_python_interpreter }}"
       - os_update_level: "{{ os_update_level }}"
       - os_update_level_default: "{{ os_update_level_default }}"
@@ -40,9 +46,6 @@
       - os_update_keep_kernel_nr: "{{ os_update_keep_kernel_nr }}"
       - os_update_keep_kernel_nr_default: "{{ os_update_keep_kernel_nr_default }}"
   when: os_update_debug_vars
-
-- name: check if host is online
-  include_tasks: ping.yml
 
 # os_update_level: security,full
 # ansible_distribution: AlmaLinux, CentOS, Ubuntu, Fedora
