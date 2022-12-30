@@ -5,7 +5,9 @@
   changed_when: false
 
 - name: Full OS Upgrade
-  shell: apt-get dist-upgrade --force-yes -y
+  shell: |
+    apt-get update
+    apt-get dist-upgrade --force-yes -y
   register: update_cmd
   args:
     warn: false
@@ -14,5 +16,6 @@
 - name: check and report if updates got installed
   debug: 
     msg: updates got installed
+  changed_when: True
   when: update_cmd.stdout.find('0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded') == -1
 ...

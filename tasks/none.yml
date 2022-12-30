@@ -1,2 +1,2 @@
 - debug:
-    msg: os_update_level=none means no updates wanted at all
+    msg: os_update_level=none means no updates wanted at all, maybe reboot is wanted...
