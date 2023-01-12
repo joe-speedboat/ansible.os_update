@@ -6,6 +6,7 @@
 
 - name: Install security updates
   shell: |
+    export DEBIAN_FRONTEND=noninteractive
     apt-get update
     apt-get -s dist-upgrade | grep '^Inst' | grep -i -- '-security ' | awk '{print $2}' | xargs apt-get install
   register: update_cmd

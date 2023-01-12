@@ -6,6 +6,7 @@
 
 - name: Full OS Upgrade
   shell: |
+    export DEBIAN_FRONTEND=noninteractive
     apt-get update
     apt-get dist-upgrade --force-yes -y
   register: update_cmd
