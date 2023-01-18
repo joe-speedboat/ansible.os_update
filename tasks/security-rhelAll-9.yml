@@ -1,7 +1,9 @@
 ---
 - name: install needed packages
-  dnf: 
-    name: yum-utils
+  dnf:
+    name:
+    - yum-utils
+    - python3-dnf
     state: present
 - name: install security patches
   dnf:
