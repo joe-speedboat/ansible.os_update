@@ -3,6 +3,4 @@
   dnf: name=dnf-utils
 - name: remove old kernel packages for RPM based systems
   shell:  dnf -y remove $(dnf repoquery --installonly --latest-limit '{{ os_update_keep_kernel_nr }}' -q | grep -v $(uname -r))
-  args:
-    warn: false
 ...

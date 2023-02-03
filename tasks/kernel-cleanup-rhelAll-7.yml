@@ -5,7 +5,5 @@
 - name: remove old kernel packages for RPM based systems
   shell:  package-cleanup -y --oldkernels --count='{{ os_update_keep_kernel_nr }}'
   register: cmd
-  args:
-    warn: false
   changed_when: "'Nothing to do' not in cmd.stdout"
 ...

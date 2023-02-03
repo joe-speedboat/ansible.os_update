@@ -10,8 +10,6 @@
     apt-get update
     apt-get dist-upgrade --force-yes -y
   register: update_cmd
-  args:
-    warn: false
   changed_when: false
 
 - name: check and report if updates got installed

@@ -5,7 +5,5 @@
 - name: remove old kernel packages for RPM based systems
   shell:  dnf remove -y $(dnf repoquery --installonly --latest-limit=-'{{ os_update_keep_kernel_nr }}' -q)
   register: cmd
-  args:
-    warn: false
   changed_when: "'Nothing to do' not in cmd.stdout"
 ...
