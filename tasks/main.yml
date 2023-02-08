@@ -1,12 +1,12 @@
 ---
 # tasks file for os_update
 
+- name: check if host is online
+  include_tasks: ping.yml
+
 - name: Define rhelAll fact dummy
   set_fact:
     ansible_distribution_combine: dummy
-
-- name: check if host is online
-  include_tasks: ping.yml
 
 - name: Create rhelAll fact if needed when AlmaLinux, Rocky, RHEL
   set_fact:
