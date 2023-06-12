@@ -2,7 +2,7 @@
 galaxy_info:
   author: Chris Ruettimann
   company: Bitbull Community
-  description: Security or full patching, cleanup old kernel versions, detect needed reboots and boot them and all perfectly controlled by vars
+  description: Security or full patching, cleanup old kernel versions, detect needed reboots and boot them. All that is controlled by defaults in clever way :-)
   min_ansible_version: 2.8
   license: GPLv3
   role_name: os_update
