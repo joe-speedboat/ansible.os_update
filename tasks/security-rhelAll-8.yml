@@ -9,6 +9,6 @@
   dnf:
     name: '*'
     state: latest
-    update_cache: True
+    update_cache: true
     security: yes
 ...

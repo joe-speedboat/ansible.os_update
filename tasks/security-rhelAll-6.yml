@@ -7,7 +7,7 @@
 - name: install security patches with yum
   yum:
     name: '*'
-    update_cache: True
+    update_cache: true
     state: latest
     security: yes
 ...

@@ -9,5 +9,4 @@
 - name: display update results
   debug:
     var: win_updates
-
-
+...

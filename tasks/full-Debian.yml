@@ -15,6 +15,6 @@
 - name: check and report if updates got installed
   debug: 
     msg: updates got installed
-  changed_when: True
+  changed_when: true
   when: update_cmd.stdout.find('0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded') == -1
 ...

@@ -8,6 +8,6 @@
 - name: perform full os upgrade
   dnf:
     name: '*'
-    update_cache: True
+    update_cache: true
     state: latest
 ...
