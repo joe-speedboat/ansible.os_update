@@ -5,15 +5,15 @@
     ping:
     register: ping
     failed_when: false
-    ignore_unreachable: yes
-    ignore_errors: yes
+    ignore_unreachable: true
+    ignore_errors: true
 
   - name: 2nd ping linux
     ping:
     register: ping2
     failed_when: false
-    ignore_unreachable: yes
-    ignore_errors: yes
+    ignore_unreachable: true
+    ignore_errors: true
     when: >
       (ping.failed is defined and ping.failed == true ) or 
       (ping.unreachable is defined and ping.unreachable == true )
@@ -25,15 +25,15 @@
     win_ping:
     register: ping
     failed_when: false
-    ignore_unreachable: yes
-    ignore_errors: yes
+    ignore_unreachable: true
+    ignore_errors: true
 
   - name: 2nd ping windows
     win_ping:
     register: ping2
     failed_when: false
-    ignore_unreachable: yes
-    ignore_errors: yes
+    ignore_unreachable: true
+    ignore_errors: true
     when: >
       (ping.failed is defined and ping.failed == true ) or 
       (ping.unreachable is defined and ping.unreachable == true )

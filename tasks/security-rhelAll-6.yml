@@ -9,5 +9,5 @@
     name: '*'
     update_cache: true
     state: latest
-    security: yes
+    security: true
 ...

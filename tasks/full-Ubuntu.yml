@@ -1,7 +1,7 @@
 ---
 - name: Update cache
   apt: 
-    update_cache: yes
+    update_cache: true
   changed_when: false
 
 - name: Full OS Upgrade
