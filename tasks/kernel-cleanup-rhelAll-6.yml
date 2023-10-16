@@ -1,7 +1,1 @@
----
-- name: make sure needed software is installed
-  yum: 
-    name: yum-utils
-- name: remove old kernel packages for RPM based systems
-  shell:  package-cleanup -y --oldkernels --count='{{ os_update_keep_kernel_nr }}'
-...
+kernel-cleanup-rhelAll-7.yml

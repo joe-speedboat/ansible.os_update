@@ -1,9 +1,1 @@
----
-- name: make sure needed software is installed
-  dnf: 
-    name: yum-utils
-- name: remove old kernel packages for RPM based systems
-  shell:  dnf remove -y $(dnf repoquery --installonly --latest-limit=-'{{ os_update_keep_kernel_nr }}' -q)
-  register: cmd
-  changed_when: "'Nothing to do' not in cmd.stdout"
-...
+kernel-cleanup-rhelAll-9.yml

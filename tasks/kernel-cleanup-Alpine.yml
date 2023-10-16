@@ -1,2 +1,6 @@
 ---
+- name: kernel cleanup notice
+  debug:
+    msg: "Kernel cleanup is not supported in Apline Linux"
+  changed_when: False
 ...

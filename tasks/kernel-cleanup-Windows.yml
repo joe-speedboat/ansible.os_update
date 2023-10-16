@@ -1,0 +1,6 @@
+---
+- name: kernel cleanup notice
+  debug:
+    msg: "Kernel cleanup is not supported in Windows"
+  changed_when: False
+...

@@ -1,2 +1,22 @@
 ---
+- name: remove old kernel packages for DEBIAN based systems
+  shell: |
+    # Number of kernels to keep
+    KEEP={{ os_update_keep_kernel_nr }}
+    # Find installed kernels and sort them
+    KERNELS=$(dpkg --list | grep linux-image | awk '{print $2}' | sort -V)
+    # Count the number of installed kernels
+    COUNT=$(echo "$KERNELS" | wc -l)
+    # Calculate number of kernels to remove
+    REMOVE=$((COUNT - KEEP))
+    # List the kernels to remove
+    REMOVE_KERNELS=$(echo "$KERNELS" | head -n $REMOVE)
+    # Remove the selected kernels
+    if [ -n "$REMOVE_KERNELS" ]; then
+      apt-get purge -y $REMOVE_KERNELS
+    else
+      echo "Nothing to remove. Exiting."
+    fi
+  register: cmd
+  changed_when: "'Nothing to remove.' not in cmd.stdout"
 ...
