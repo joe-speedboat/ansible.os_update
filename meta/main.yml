@@ -6,7 +6,7 @@ galaxy_info:
   min_ansible_version: 2.8
   license: GPLv3
   role_name: os_update
-  namespace: joe-speedboat
+#  namespace: joe-speedboat
   platforms:
   - name: EL
   - name: Fedora
