@@ -1,6 +1,7 @@
 ---
 - name: remove old kernel packages for DEBIAN based systems
   shell: |
+    export DEBIAN_FRONTEND=noninteractive
     # Number of kernels to keep
     KEEP={{ os_update_keep_kernel_nr }}
     # Find installed kernels and sort them
