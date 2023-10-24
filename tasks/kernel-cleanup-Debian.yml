@@ -23,6 +23,7 @@
     egrep -v "$(dpkg -l | grep '^..  linux-image' | awk '{print $3}' | tr '\n' '|' | sed 's/.$//' )" |\
     awk '{print $2}' | egrep -- '-[0-9]\.[0-9]\.'  |\
     xargs -r apt-get remove --purge -y
+    echo RC:$?
   register: cmd
   changed_when: "'Nothing to remove.' not in cmd.stdout"
 ...
