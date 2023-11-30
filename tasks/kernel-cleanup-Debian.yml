@@ -17,6 +17,7 @@
       for REMOVE_KERNEL in $REMOVE_KERNELS
       do
         echo "INFO: removing kernel: $REMOVE_KERNEL"
+        logger -t ansible_role_os_update "INFO: removing kernel: $REMOVE_KERNEL"
         apt-get purge -y "linux-image*${REMOVE_KERNEL}" "linux-modules*${REMOVE_KERNEL}" "linux-headers*${REMOVE_KERNEL}"
       done
     else
