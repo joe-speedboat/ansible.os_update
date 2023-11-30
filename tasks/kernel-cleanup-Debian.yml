@@ -5,7 +5,7 @@
     # Number of kernels to keep
     KEEP={{ os_update_keep_kernel_nr }}
     # Find installed kernels and sort them
-    KERNELS=$(dpkg --list | grep 'linux-image.*-generic' | awk '{print $2}' | sort -V | grep -P 'linux-image-.*-\d+\.\d+\.\d+(-\d+)?-?[a-z]*' | sed 's/linux-image-//;s/unsigned-//' | grep -v $(uname -r) | sort -u)
+    KERNELS=$(dpkg --list | grep 'linux-image.*-generic' | awk '{print $2}' | sort -V | grep -P 'linux-image-.*\d+\.\d+\.\d+(-\d+)?-?[a-z]*' | sed 's/linux-image-//;s/unsigned-//' | grep -v $(uname -r) | sort -u)
     # Count the number of installed kernels
     COUNT=$(echo "$KERNELS" | wc -l)
     # Calculate number of kernels to remove
@@ -16,19 +16,19 @@
     if [ -n "$REMOVE_KERNELS" ]; then
       for REMOVE_KERNEL in $REMOVE_KERNELS
       do
-        apt-get remove -y "linux-image*${REMOVE_KERNEL}" "linux-modules*${REMOVE_KERNEL}" "linux-headers*${REMOVE_KERNEL}"
+        echo "INFO: removing kernel: $REMOVE_KERNEL"
         apt-get purge -y "linux-image*${REMOVE_KERNEL}" "linux-modules*${REMOVE_KERNEL}" "linux-headers*${REMOVE_KERNEL}"
       done
     else
       echo "Nothing to remove. Exiting."
     fi
-  # check if at least the current running kernel is installed
-  if [ $(dpkg -l | grep "^ii .*linux-image-.*$(uname -r)" | wc -l ) -lt 1 ]
-  then
-    logger -t ansible_role_os_update "ERROR: running kernel not found, install it to make stable again"
-    echo "ERROR: running kernel not found, install it to make stable again"
-    apt-get -y install "linux-image-$(uname -r)"
-  fi
+    # check if at least the current running kernel is installed
+    if [ $(dpkg -l | grep "^ii .*linux-image-.*$(uname -r)" | wc -l ) -lt 1 ]; then
+      logger -t ansible_role_os_update "ERROR: running kernel not found, install it to make stable again"
+      echo "ERROR: running kernel not found, install it to make stable again"
+      apt-get -y install "linux-image-$(uname -r)"
+      exit 1
+    fi
   register: cmd
   changed_when: "'Nothing to remove.' not in cmd.stdout"
 ...
