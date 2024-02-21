@@ -20,7 +20,7 @@ Supported Operating Systems:
 * RHEL, CentOS, Rocky, Alma
   * Version: 6-9 
 
-* Ubuntu LTS: 18.04 20.04
+* Ubuntu LTS: 20.04 22.04
 
 * Alpine: stable-latest
 
