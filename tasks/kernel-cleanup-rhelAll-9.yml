@@ -3,8 +3,6 @@
   dnf: 
     name: yum-utils
 - name: remove old kernel packages for RPM based systems
-  shell:  dnf remove -y $(dnf repoquery --installonly --latest-limit=-'{{ os_update_keep_kernel_nr }}' -q)
-- name: remove old kernel packages for RPM based systems
   shell: |
     RUNNING_KERNEL=$(uname -r)
     # echo RUNNING_KERNEL=$RUNNING_KERNEL
