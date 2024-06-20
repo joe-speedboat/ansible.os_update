@@ -6,7 +6,7 @@
   shell: |
     # Number of newest kernels to keep
     # KEEP_KERNEL=${1:-2}
-    KEEP_KERNEL="{{ ospatch_keep_kernel_nr }}"
+    KEEP_KERNEL="{{ os_update_keep_kernel_nr }}"
 
     # Get the list of all installed kernel packages
     kernel_packages=$(rpm -qa | grep -E '^kernel(-core|-modules|-modules-core)?-[0-9]')
