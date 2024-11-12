@@ -3,16 +3,32 @@
   apt: 
     update_cache: true
   changed_when: false
+  register: result
+  retries: "{{ os_update_retry }}"
+  delay: "{{ os_update_retry_delay }}"
+  until: result is not failed
+- name: print results
+  debug:
+    var: result
+  when: os_update_debug_vars
+
 
 - name: Install security updates
   shell: |
     export DEBIAN_FRONTEND=noninteractive
     apt-get update
-    apt-get -s dist-upgrade | grep '^Inst' | grep -i -- '-security ' | awk '{print $2}' | xargs apt-get install
-  register: update_cmd
+    sudo apt-get -y install --only-upgrade $(apt list --upgradable 2>/dev/null | grep -i "\-security" | awk -F/ '{print $1}')
   changed_when: false
+  register: result
+  retries: "{{ os_update_retry }}"
+  delay: "{{ os_update_retry_delay }}"
+  until: result is not failed
+- name: print results
+  debug:
+    var: result
+  when: os_update_debug_vars
 
 - name: check for installed packages
   debug: msg='updates got installed'
-  when: update_cmd.stdout.find('0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded') == -1
+  when: result.stdout.find('0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded') == -1
 ...

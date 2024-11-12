@@ -3,17 +3,24 @@
 os_update_level_default: 'security'
 os_update_level: "{{ os_update_level_default }}"
 
+# reboot os if updates need to
+# os_update_reboot: [allow|deny|force]
+# backward compatibility: True => allow, False => deny
+os_update_reboot_default: 'allow'
+os_update_reboot: "{{ os_update_reboot_default }}"
+
+# retry handling: sometimes, connectivity and network load is a problem, here we care
+os_update_retry_default: 3
+os_update_retry: "{{ os_update_retry_default }}"
+os_update_retry_delay_default: "{{ 60 + (540 | random(seed=inventory_hostname)) }}"
+os_update_retry_delay: "{{ os_update_retry_delay_default }}"
+
 # defaults to serial var, for clusters you may need 1
 # This defines, how many systems can reboot at same time, limit is always the serial magic var
 # WARNING: Windows Systems do not care about this value (tbd)
 # os_update_conc_reboot: ["integer"]
 os_update_conc_reboot_default: "{{ ansible_play_batch|length|int }}"
 os_update_conc_reboot: "{{ os_update_conc_reboot_default }}"
-
-# reboot os if updates need to
-# os_update_reboot: [true|false]
-os_update_reboot_default: True
-os_update_reboot: "{{ os_update_reboot_default }}"
 
 # remove old kernel to free space
 # os_update_remove_old_kernel: [true|false]
@@ -25,7 +32,7 @@ os_update_keep_kernel_nr: "{{ os_update_keep_kernel_nr_default }}"
 
 # show the final vars before work
 # os_update_debug_vars: [true|false]
-os_update_debug_vars: False
+os_update_debug_vars: True
 
 # which categories to apply, eg: ['CriticalUpdates', 'SecurityUpdates', 'UpdateRollups']
 # win_updates > category_names

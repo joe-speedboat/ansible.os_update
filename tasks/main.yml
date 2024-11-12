@@ -1,6 +1,30 @@
 ---
 # tasks file for os_update
 
+- name: Check if os_update_reboot has a legacy value
+  set_fact:
+    legacy_value_detected: "{{ os_update_reboot in [True, False, '0', '1'] }}"
+
+- name: legacy values detected
+  block:
+  - name: Migrate old values to new values
+    set_fact:
+      os_update_reboot: "{% if os_update_reboot in [True, '1'] %}allow{% elif os_update_reboot in [False, '0'] %}deny{% else %}{{ os_update_reboot }}{% endif %}"
+
+  - name: Display warning if legacy value is detected
+    debug:
+      msg:
+      - WARNING, Deprecated value detected for os_update_reboot.
+      - Detected values such as True, False, '0', '1' are no longer supported.
+      - They have been mapped to the new values (True -> 'allow', False -> 'deny').
+      - Please update your variables accordingly.
+      - "Migrated values: os_update_reboot: {{ os_update_reboot }}"
+
+  - name: Wait 5 minutes if legacy value was used, just to get attention
+    wait_for:
+      timeout: 300
+  when: legacy_value_detected
+
 - name: check if host is online
   include_tasks: ping.yml
 
@@ -46,6 +70,10 @@
       - os_update_remove_old_kernel_default: "{{ os_update_remove_old_kernel_default }}"
       - os_update_keep_kernel_nr: "{{ os_update_keep_kernel_nr }}"
       - os_update_keep_kernel_nr_default: "{{ os_update_keep_kernel_nr_default }}"
+      - os_update_retry_default: "{{ os_update_retry_default }}"
+      - os_update_retry: "{{ os_update_retry }}"
+      - os_update_retry_delay_default: "{{ os_update_retry_delay_default }}"
+      - os_update_retry_delay: "{{ os_update_retry_delay }}"
   when: os_update_debug_vars
 
 # os_update_level: security,full
@@ -81,7 +109,9 @@
       errors: 'ignore'
   loop_control:
     loop_var: boot_host
-  when: os_update_reboot
+  when: >
+    os_update_reboot == 'allow' or
+    os_update_reboot == 'force'
 
 - name: Cleanup old kernels
   include_tasks: '{{ kernel_cleanup_host }}'
@@ -98,5 +128,6 @@
     loop_var: kernel_cleanup_host
   when: >
     os_update_remove_old_kernel and 
-    os_update_reboot and 
+    ( os_update_reboot == 'allow' or os_update_reboot == 'force' ) and
     os_update_level != 'none'
+

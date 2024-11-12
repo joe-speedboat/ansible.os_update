@@ -28,6 +28,7 @@
     fail:
       msg: "{{ ansible_host }} has not booted, manual check needed"
     when: reboot_check.rc != 0
-  when: needs_restarting.stdout|int != 0 
+  when: needs_restarting.stdout|int != 0 or
+    os_update_reboot == 'force'
   throttle: "{{ os_update_conc_reboot }}"
 ...

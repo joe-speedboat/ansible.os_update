@@ -8,4 +8,13 @@
     state: latest
     update_cache: true
     security: true
+  register: result
+  retries: "{{ os_update_retry }}"
+  delay: "{{ os_update_retry_delay }}"
+  until: result is not failed
+- name: print results
+  debug:
+    var: result
+  when: os_update_debug_vars
+
 ...

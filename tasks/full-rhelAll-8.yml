@@ -5,9 +5,27 @@
     - yum-utils
     - python3-dnf
     state: present
+  register: result
+  retries: "{{ os_update_retry }}"
+  delay: "{{ os_update_retry_delay }}"
+  until: result is not failed
+- name: print results
+  debug:
+    var: result
+  when: os_update_debug_vars
+
 - name: perform full os upgrade
   dnf:
     name: '*'
     update_cache: true
     state: latest
+  register: result
+  retries: "{{ os_update_retry }}"
+  delay: "{{ os_update_retry_delay }}"
+  until: result is not failed
+- name: print results
+  debug:
+    var: result
+  when: os_update_debug_vars
+
 ...

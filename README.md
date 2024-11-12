@@ -1,5 +1,4 @@
-Role Name
-=========
+# joe-speedboat.os_update
 
 This role will aply security or full patching to Red Hat, Ubuntu and Alpine machines.
 
@@ -10,17 +9,15 @@ It can do
 
 Since I only work with AWX (v20.0.1), it is only tested with its (latest) ansible versions.
 
-Requirements
-------------
+## Requirements
 
 Working internet and proper repository configuration on machines.
 
-Supported Operating Systems:
-----------------------------
+## Supported Operating Systems:
 * RHEL, CentOS, Rocky, Alma
   * Version: 6-9 
 
-* Ubuntu LTS: 20.04 22.04
+* Ubuntu LTS: 20.04 22.04, 24.04
 
 * Alpine: stable-latest
 
@@ -28,13 +25,18 @@ Supported Operating Systems:
 
 * Mint works, but has no focus (personal needs)
 
+## Breaking Changes
+* The `os_update_reboot` variable has been updated. 
+  Old boolean values (`True`|`False`) are no longer supported and should be replaced 
+  with the new string values (`allow`|`deny`|`force`).
+* however, at the moment we catch them up and migrate them:
+  * `True` => `allow`
+  * `False` => `deny`
 
-Role Variables
---------------
+## Role Variables
 * gather_facts is turned off, due we need to decide if host is online first.    
   we do this multiple times, to avoid load and connectivity issues.   
   please look into `tests` folder.   
-
 
 Most variables have ```varname_default``` equivalent, which is meant to be used for overriding the default at playbook level.   
 So you can define the default behavior for all targets that have no variables defined at all. eg: full|security patching.   
@@ -50,8 +52,8 @@ Remind: `varname` is always enforcing, `varname_default` is just overriding the 
 * `os_update_level:` security   
 os_update_level: [none|security|full]
 
-* `os_update_reboot:` true   
-os_update_reboot: [true|false]
+* `os_update_reboot:` allow   
+os_update_reboot: [allow|deny|force]
 
 * `os_update_remove_old_kernel:` true   
 os_update_remove_old_kernel: [true|false]
@@ -59,17 +61,14 @@ os_update_remove_old_kernel: [true|false]
 * `os_update_keep_kernel_nr:` 2
 
 
-Dependencies
-------------
+## Dependencies
 None so far.
 
-Example Playbook
-----------------
+## Example Playbook
 
 check test dir for examples
 
-License
--------
+## License
 
 GPLv3
 
