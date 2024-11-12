@@ -5,5 +5,5 @@
     - joe-speedboat.os_update
   vars:
   - os_update_level_default: security
-  - os_update_reboot_default: false
+  - os_update_reboot_default: deny
 ...
