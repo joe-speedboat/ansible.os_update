@@ -1,5 +1,5 @@
 ---
-- name: remove old kernel packages for DEBIAN based systems
+- name: remove old kernel packages for DEBIAN based systems, this is such a mess, zzzz
   shell: |
     export DEBIAN_FRONTEND=noninteractive
     # Number of kernels to keep

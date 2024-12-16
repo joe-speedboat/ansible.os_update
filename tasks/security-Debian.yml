@@ -1,18 +1,4 @@
 ---
-- name: Update cache
-  apt: 
-    update_cache: true
-  changed_when: false
-  register: result
-  retries: "{{ os_update_retry }}"
-  delay: "{{ os_update_retry_delay }}"
-  until: result is not failed
-- name: print results
-  debug:
-    var: result
-  when: os_update_debug_vars
-
-
 - name: Install security updates
   shell: |
     export DEBIAN_FRONTEND=noninteractive
@@ -23,6 +9,7 @@
   retries: "{{ os_update_retry }}"
   delay: "{{ os_update_retry_delay }}"
   until: result is not failed
+
 - name: print results
   debug:
     var: result

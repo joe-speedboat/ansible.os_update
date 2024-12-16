@@ -1,8 +1,27 @@
 ---
-- name: show if windows has rebooted with updates
+- name: Check pending reboot using PowerShell
+  win_shell: |
+    # Check pending reboot via registry keys
+    $HKLM = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired"
+    $RebootPending = Test-Path $HKLM
+    if ($RebootPending) { Write-Output "1" } else { Write-Output "0" }
+  register: reboot_check
+  changed_when: false
+
+- name: Normalize reboot check result
+  set_fact:
+    reboot_status: "{{ reboot_check.stdout.strip() }}"
+
+- name: Show check result
   debug:
-    msg: 
-    - "win_updates.reboot_required: {{ win_updates.reboot_required }}"
-    - "os_update_reboot: {{ os_update_reboot }}"
-    - "INFO: throttle: {{ os_update_conc_reboot }} is not implemented"
-  changed_when: win_updates.reboot_required and os_update_reboot 
+    var: reboot_status
+  when: os_update_debug_vars
+
+- name: Initiate reboot if needed
+  win_reboot:
+    msg: "Reboot triggered by Ansible due to pending updates."
+    reboot_timeout: 1200 # updates may take time, we give 20min
+  when: reboot_status == "1" or os_update_reboot == 'force'
+  throttle: "{{ os_update_conc_reboot }}"
+...
+

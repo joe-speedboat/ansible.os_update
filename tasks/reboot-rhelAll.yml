@@ -1,0 +1,13 @@
+---
+- name: check if reboot is needed
+  shell: needs-restarting -r
+  register: needs_restarting
+  changed_when: needs_restarting.failed
+  ignore_errors: true
+
+- name: Reboot Red Hat like server
+  reboot:
+    msg: "Reboot initiated by Ansible due to kernel updates"
+  throttle: "{{ os_update_conc_reboot }}"
+  when: needs_restarting.failed or os_update_reboot == 'force'
+...

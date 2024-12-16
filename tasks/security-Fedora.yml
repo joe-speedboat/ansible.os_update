@@ -1,13 +1,1 @@
----
-- name: install security patches with dnf
-  shell: dnf -y upgrade-minimal
-  changed_when: not result.stdout is search('No security updates needed')
-  register: result
-  retries: "{{ os_update_retry }}"
-  delay: "{{ os_update_retry_delay }}"
-  until: result is not failed
-- name: print results
-  debug:
-    var: result
-  when: os_update_debug_vars
-...
+security-rhelAll-9.yml

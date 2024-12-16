@@ -25,9 +25,6 @@
       timeout: 300
   when: legacy_value_detected
 
-- name: check if host is online
-  include_tasks: ping.yml
-
 - name: Define rhelAll fact dummy
   set_fact:
     ansible_distribution_combine: dummy

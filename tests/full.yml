@@ -4,5 +4,5 @@
   roles:
     - joe-speedboat.os_update
   vars:
-  - os_update_level_default: full
-  - os_update_reboot_default: force
+    os_update_level_default: full
+    os_update_reboot_default: force

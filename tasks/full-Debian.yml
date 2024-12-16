@@ -1,37 +1,17 @@
 ---
-- name: Update cache
-  apt: 
-    update_cache: true
-  changed_when: false
-  register: result
-  retries: "{{ os_update_retry }}"
-  delay: "{{ os_update_retry_delay }}"
-  until: result is not failed
-- name: print results
-  debug:
-    var: result
-  when: os_update_debug_vars
-
-
 - name: Full OS Upgrade
-  shell: |
-    export DEBIAN_FRONTEND=noninteractive
-    apt-get update
-    apt-get dist-upgrade --force-yes -y
-  changed_when: false
+  apt:
+    update_cache: true
+    force_apt_get: True
+    name: "*"
+    state: latest
   register: result
   retries: "{{ os_update_retry }}"
   delay: "{{ os_update_retry_delay }}"
   until: result is not failed
+
 - name: print results
   debug:
     var: result
   when: os_update_debug_vars
-
-
-- name: check and report if updates got installed
-  debug: 
-    msg: updates got installed
-  changed_when: true
-  when: result.stdout.find('0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded') == -1
 ...
