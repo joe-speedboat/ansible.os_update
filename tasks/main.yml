@@ -1,6 +1,22 @@
 ---
 # tasks file for os_update
 
+- name: gather facts if not exist
+  block:
+  - name: gather facts
+    setup:
+  - name: Display warning if facts did not exist
+    debug:
+      msg:
+      - WARNING, fact gathering is required for this play
+      - Since this is a breaking change, we do it for now
+      - Please update your variables accordingly.
+      - change your play to enable gather_facts
+  - name: Wait 3 minutes if legacy value was used, just to get attention
+    wait_for:
+      timeout: 180
+  when: ansible_facts is undefined or ansible_facts == {}
+
 - name: Check if os_update_reboot has a legacy value
   set_fact:
     legacy_value_detected: "{{ os_update_reboot in [True, False, '0', '1'] }}"
@@ -20,9 +36,9 @@
       - Please update your variables accordingly.
       - "Migrated values: os_update_reboot: {{ os_update_reboot }}"
 
-  - name: Wait 5 minutes if legacy value was used, just to get attention
+  - name: Wait 3 minutes if legacy value was used, just to get attention
     wait_for:
-      timeout: 300
+      timeout: 180
   when: legacy_value_detected
 
 - name: Define rhelAll fact dummy

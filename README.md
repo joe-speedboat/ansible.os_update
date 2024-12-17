@@ -29,15 +29,14 @@ Working internet and proper repository configuration on machines.
 * The `os_update_reboot` variable has been updated. 
   Old boolean values (`True`|`False`) are no longer supported and should be replaced 
   with the new string values (`allow`|`deny`|`force`).
-* however, at the moment we catch them up and migrate them:
+* however, at the moment we catch them up and migrate old var settings:
   * `True` => `allow`
   * `False` => `deny`
 
-## Role Variables
-* gather_facts is turned off, due we need to decide if host is online first.    
-  we do this multiple times, to avoid load and connectivity issues.   
-  please look into `tests` folder.   
+* gather_facts is now turned on by default
+  * we notify if missing
 
+## Role Variables
 Most variables have ```varname_default``` equivalent, which is meant to be used for overriding the default at playbook level.   
 So you can define the default behavior for all targets that have no variables defined at all. eg: full|security patching.   
 
