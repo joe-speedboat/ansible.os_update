@@ -15,9 +15,9 @@ Working internet and proper repository configuration on machines.
 
 ## Supported Operating Systems:
 * RHEL, CentOS, Rocky, Alma
-  * Version: 6-9 
+  * Version: 8-9 
 
-* Ubuntu LTS: 20.04 22.04, 24.04
+* Ubuntu LTS: 22.04, 24.04
 
 * Alpine: stable-latest
 
