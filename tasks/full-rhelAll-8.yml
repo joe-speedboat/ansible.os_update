@@ -28,5 +28,4 @@
   debug:
     var: result
   when: os_update_debug_vars
-
 ...

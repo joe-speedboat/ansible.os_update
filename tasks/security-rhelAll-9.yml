@@ -21,6 +21,7 @@
     state: latest
     update_cache: true
     security: true
+    exclude: 'kernel*'
   register: result
   retries: "{{ os_update_retry }}"
   delay: "{{ os_update_retry_delay }}"
