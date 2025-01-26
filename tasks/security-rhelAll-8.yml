@@ -1,35 +1,30 @@
 ---
-- name: install needed packages
-  dnf:
-    name:
-    - yum-utils
-    - python3-dnf
-    state: present
+- name: EOL message
+  debug:
+    msg:
+    - "RHEL 8 based OS have only python3.6 base support"
+    - "       So dnf and other modules will fail with ansible core >= 2.16"
+    - "       We workaround with shell cmd to provide working tasks for rhel9"
+    - "       https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html"
+    - "       https://github.com/ansible/ansible/issues/83357#issuecomment-2150254754"
+
+- name: Install required packages if not already installed (dnf)
+  ansible.builtin.command: "dnf -y install python3-dnf yum-utils"
   register: result
-  retries: "{{ os_update_retry }}"
-  delay: "{{ os_update_retry_delay }}"
-  until: result is not failed
+  changed_when: "'Nothing to do.' not in result.stdout"
 
 - name: print results
   debug:
     var: result
   when: os_update_debug_vars
 
-- name: install security patches
-  dnf:
-    name: '*'
-    state: latest
-    update_cache: true
-    security: true
-    exclude: 'kernel*'
+- name: Install security updates (dnf)
+  ansible.builtin.command: "dnf -y update --security --exclude=kernel*"
   register: result
-  retries: "{{ os_update_retry }}"
-  delay: "{{ os_update_retry_delay }}"
-  until: result is not failed
+  changed_when: "'Nothing to do.' not in result.stdout"
 
 - name: print results
   debug:
     var: result
   when: os_update_debug_vars
-
 ...
