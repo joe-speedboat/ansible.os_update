@@ -32,7 +32,7 @@ os_update_keep_kernel_nr: "{{ os_update_keep_kernel_nr_default }}"
 
 # show the final vars before work
 # os_update_debug_vars: [true|false]
-os_update_debug_vars: True
+os_update_debug_vars: False
 
 # which categories to apply, eg: ['CriticalUpdates', 'SecurityUpdates', 'UpdateRollups']
 # win_updates > category_names
