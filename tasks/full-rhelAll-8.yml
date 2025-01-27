@@ -4,7 +4,7 @@
     msg:
     - "RHEL 8 based OS have only python3.6 base support"
     - "       So dnf and other modules will fail with ansible core >= 2.16"
-    - "       We workaround with shell cmd to provide working tasks for rhel9"
+    - "       We workaround with shell cmd to provide working tasks for rhel8"
     - "       https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html"
     - "       https://github.com/ansible/ansible/issues/83357#issuecomment-2150254754"
 
