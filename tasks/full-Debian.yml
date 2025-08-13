@@ -1,4 +1,8 @@
 ---
+- name: Run the equivalent of "apt-get clean"
+  apt:
+    clean: yes
+
 - name: Full OS Upgrade
   apt:
     update_cache: true
