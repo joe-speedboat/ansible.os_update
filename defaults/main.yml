@@ -16,8 +16,10 @@ os_update_post_shell_default: ''
 os_update_post_shell: '{{ os_update_post_shell_default }}'
 # example:
 # os_update_pre_shell: |
-#   systemctl status xy || systemctl start xy
+#   set -e
 #   systemctl status xy
+#   systemctl stop xy
+#   systemctl start xy
 
 # retry handling: sometimes, connectivity and network load is a problem, here we care
 os_update_retry_default: 3
