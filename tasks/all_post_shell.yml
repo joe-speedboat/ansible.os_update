@@ -1,0 +1,5 @@
+---
+- name: Run post-update shell commands if defined
+  ansible.builtin.shell: |
+    {{ os_update_post_shell }}
+...

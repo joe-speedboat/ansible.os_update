@@ -9,6 +9,16 @@ os_update_level: "{{ os_update_level_default }}"
 os_update_reboot_default: 'allow'
 os_update_reboot: "{{ os_update_reboot_default }}"
 
+# pre and post update shell handler
+os_update_pre_shell_default: ''
+os_update_pre_shell: '{{ os_update_pre_shell_default }}'
+os_update_post_shell_default: ''
+os_update_post_shell: '{{ os_update_post_shell_default }}'
+# example:
+# os_update_pre_shell: |
+#   systemctl status xy || systemctl start xy
+#   systemctl status xy
+
 # retry handling: sometimes, connectivity and network load is a problem, here we care
 os_update_retry_default: 3
 os_update_retry: "{{ os_update_retry_default }}"

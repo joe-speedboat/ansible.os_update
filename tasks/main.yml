@@ -73,12 +73,23 @@
       - os_update_retry: "{{ os_update_retry }}"
       - os_update_retry_delay_default: "{{ os_update_retry_delay_default }}"
       - os_update_retry_delay: "{{ os_update_retry_delay }}"
+      - os_update_pre_shell_default: "{{ os_update_pre_shell_default }}"
+      - os_update_pre_shell: "{{ os_update_pre_shell }}"
+      - os_update_post_shell_default: "{{ os_update_post_shell_default }}"
+      - os_update_post_shell: "{{ os_update_post_shell }}"
   when: os_update_debug_vars
 
 # os_update_level: security,full
 # ansible_distribution: AlmaLinux, CentOS, Ubuntu, Fedora
 # ansible_distribution_major_version: 8, 7, 18, 32
 # ansible_os_family: RedHat, RedHat, Debian, RedHat
+
+- name: include pre-update shell tasks
+  include_tasks: 'all_pre_shell.yml'
+  when: >
+    os_update_level != 'none' and
+    os_update_pre_shell is defined and
+    os_update_pre_shell | trim != ''
 
 - name: Upgrade OS Packages
   include_tasks: '{{ patch_host }}'
@@ -129,4 +140,11 @@
     os_update_remove_old_kernel and 
     ( os_update_reboot == 'allow' or os_update_reboot == 'force' ) and
     os_update_level != 'none'
+
+- name: include post-update shell tasks
+  include_tasks: 'all_post_shell.yml'
+  when: >
+    os_update_level != 'none' and
+    os_update_post_shell is defined and
+    os_update_post_shell | trim != ''
 

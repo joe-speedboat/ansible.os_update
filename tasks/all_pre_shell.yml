@@ -1,0 +1,5 @@
+---
+- name: Run pre-update shell commands if defined
+  ansible.builtin.shell: |
+    {{ os_update_pre_shell }}
+...
