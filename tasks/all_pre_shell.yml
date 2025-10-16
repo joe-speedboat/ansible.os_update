@@ -2,4 +2,10 @@
 - name: Run pre-update shell commands if defined
   ansible.builtin.shell: |
     {{ os_update_pre_shell }}
+  register: result
+
+- name: print pre-update results
+  debug:
+    var: result
+  when: os_update_debug_vars
 ...
