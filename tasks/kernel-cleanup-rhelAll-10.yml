@@ -33,7 +33,7 @@
     if [ -n "$packages_to_remove" ]; then
       echo "Removing the following kernel packages:"
       echo "$packages_to_remove"
-      sudo dnf remove -y $packages_to_remove
+      dnf remove -y $packages_to_remove
     else
       echo "No old kernels to remove."
     fi
