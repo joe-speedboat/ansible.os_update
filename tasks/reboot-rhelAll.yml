@@ -8,6 +8,6 @@
 - name: Reboot Red Hat like server
   reboot:
     msg: "Reboot initiated by Ansible due to kernel updates"
+    reboot_command: "/usr/bin/systemctl reboot"
   throttle: "{{ os_update_conc_reboot }}"
   when: needs_restarting.failed or os_update_reboot == 'force'
-...
