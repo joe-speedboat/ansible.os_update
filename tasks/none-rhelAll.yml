@@ -1,0 +1,4 @@
+---
+- name: No OS update requested
+  debug:
+    msg: "os_update_level is set to none; skipping package updates for RHEL-family systems."

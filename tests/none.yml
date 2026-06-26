@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: true
+  become: True
+  roles:
+    - joe-speedboat.os_update
+  vars:
+    os_update_level_default: none
+    os_update_reboot_default: deny
+...
